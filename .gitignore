@@ -1,0 +1,6 @@
+.vscode
+bower_components
+vendor
+composer.lock
+config.php
+files

@@ -13,41 +13,55 @@
  * @since     1.0.0
  */
 
-$this->layout('layout', ['title' => 'Upload your picture'])
+$this->layout('layout', ['title' => $title])
 ?>
 <form action="<?php echo \W6\InstaWatermark\url('/'); ?>"
       method="post"
       enctype="multipart/form-data">
     <?php if ($uploaded) : ?>
-    <div class="alert alert-<?php echo $success ? 'success' : 'danger'; ?>"
+    <div class="alert alert-danger"
          role="alert">
-        <?php echo $message; ?>
+        <?php echo $this->e($message); ?>
     </div>
     <?php endif; ?>
-    <div class="form-group">
-        <label for="pic">Picture</label>
-        <input type="file"
-               class="form-control-file"
-               id="pic"
-               name="pic"
-               aria-describedby="picHelp">
-        <small id="picHelp"
-               class="form-text text-muted">Insert your picture here.</small>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"
+                  id="picHelp">Picture</span>
+        </div>
+        <div class="custom-file">
+            <input type="file"
+                   class="custom-file-input"
+                   id="pic"
+                   name="pic"
+                   required
+                   aria-describedby="picHelp">
+            <label class="custom-file-label"
+                   for="pic">Choose file...</label>
+        </div>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"
+                  id="watermarkHelp">Watermark</span>
+        </div>
+        <div class="custom-file">
+            <input type="file"
+                   class="custom-file-input"
+                   id="watermark"
+                   name="watermark"
+                   required
+                   aria-describedby="watermarkHelp">
+            <label class="custom-file-label"
+                   for="watermark">Choose file...</label>
+        </div>
     </div>
     <div class="form-group">
-        <label for="watermark">Watermark</label>
-        <input type="file"
-               class="form-control-file"
-               id="watermark"
-               name="watermark"
-               aria-describedby="watermarkHelp">
-        <small id="watermarkHelp"
-               class="form-text text-muted">Insert your watermark here.</small>
-    </div>
-    <div class="form-group">
-        <label for="position">Position</label>
-        <select class="form-control"
+        <label for="position"
+               class="d-none">Position</label>
+        <select class="custom-select"
                 id="position"
+                required
                 name="position">
             <option value="top-left">Top left</option>
             <option value="top">Top</option>
@@ -61,5 +75,5 @@ $this->layout('layout', ['title' => 'Upload your picture'])
         </select>
     </div>
     <button type="submit"
-            class="btn btn-primary">Submit</button>
+            class="btn btn-primary btn-lg btn-block">Submit</button>
 </form>

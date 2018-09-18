@@ -49,8 +49,26 @@ class App
             'GET|POST',
             '/',
             function () {
-                $c = new HomeController();
-                $c->index();
+                $c = new MainController();
+                $c->home();
+            }
+        );
+
+        $router->map(
+            'GET',
+            '/view/[*:image]',
+            function ($image) {
+                $c = new MainController();
+                $c->view($image);
+            }
+        );
+
+        $router->map(
+            'GET',
+            '/download/[*:image]',
+            function ($image) {
+                $c = new MainController();
+                $c->download($image);
             }
         );
 

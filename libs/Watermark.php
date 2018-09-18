@@ -72,6 +72,7 @@ class Watermark
             ->resize(1080, 1080)
             ->insert($this->watermark, $this->position)
             ->save();
+        unlink($this->watermark);
         //echo $image->response();
     }
 }

@@ -79,20 +79,20 @@ class Upload
         if (!isset($_FILES[$this->key])) {
             throw new \Exception('No files were uploaded');
         }
-
+        $saveFolderPath = Config::get('folderPath');
         $this->filename = $this->key.'_'.uniqid();
         $upload = new \upload($_FILES[$this->key]);
-        $upload->file_max_size = '1024000';
+        $upload->file_max_size = Config::get('maxUploadSize');
         $upload->file_new_name_body = $this->filename;
         $upload->allowed = array('image/*');
         $upload->image_resize = false;
         if ($this->convert) {
             $upload->image_convert = 'jpg';
         }
-        $upload->process(ROOT.'/files/');
+        $upload->process($saveFolderPath);
         if ($upload->processed) {
             $upload->clean();
-            $this->path = ROOT.'/files/'.$upload->file_dst_name;
+            $this->path = $saveFolderPath.'/'.$upload->file_dst_name;
             return true;
         }
         throw new \Exception('An error has occured : '.$upload->error);

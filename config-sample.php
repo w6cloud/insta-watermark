@@ -13,6 +13,8 @@
  * @since     1.0.0
  */
 
+namespace W6\InstaWatermark;
+
 /**
  * Configuration
  */
@@ -25,6 +27,24 @@ $config['debug'] = false;
 
 /**
  * Base URL
- * Configure f your script is based in a subfolder (eg: /insta-watermark)
+ * Configure only if your script is based in a subfolder (eg: /insta-watermark)
  */
 $config['baseUrl'] = '';
+
+/**
+ * Folder Path
+ * Path to folder where images will be stored
+ */
+$config['folderPath'] = ROOT.'/uploads';
+
+/**
+ * Folder base URL
+ * Base url to access the stored images
+ */
+$config['folderBaseUrl'] = $config['baseUrl'].'/uploads';
+
+/**
+ * Max upload size
+ * Maximum size of uploaded images
+ */
+$config['maxUploadSize'] = 1024 * 1000 * 8; // 8 MB

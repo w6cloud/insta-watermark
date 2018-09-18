@@ -46,3 +46,15 @@ function url($url)
 {
     return URL_BASE.$url;
 }
+
+/**
+ * print_r wrapped with <pre>
+ *
+ * @param mixed $data The data to display.
+ *
+ * @return string
+ */
+function pr($data)
+{
+    echo '<pre>'.print_r($data, true).'</pre>';
+}

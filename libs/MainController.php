@@ -1,6 +1,6 @@
 <?php
 /**
- * Home controller
+ * Main controller
  *
  * PHP version 7
  *
@@ -16,7 +16,7 @@
 namespace W6\InstaWatermark;
 
 /**
- * Home controller
+ * Main controller
  *
  * @todo customize download link according to config
  *
@@ -27,12 +27,11 @@ namespace W6\InstaWatermark;
  * @license   https://www.gnu.org/licenses/gpl-3.0.txt  GNU GPLv3
  * @link      https://github.com/web6-fr/insta-watermark
  */
-class HomeController
+class MainController
 {
-    public static function index()
+    public function home()
     {
         $uploaded = false;
-        $success = false;
         $message = 'Unknown error.';
         if (!empty($_POST)) {
             $uploaded = true;
@@ -55,13 +54,41 @@ class HomeController
                 $position = isset($_POST['position']) && in_array($_POST['position'], $positions) ? $_POST['position'] : 'top-left';
                 $image = new Watermark($pic->path, $watermark->path, $position);
                 $image->handle();
-                $success = true;
-                $message = '<a href="files/'.pathinfo($pic->path, PATHINFO_BASENAME).'" target="_blank">Download image</a>';
+                header('Location: '.url('/view/'.pathinfo($pic->path, PATHINFO_BASENAME)));
+                die;
             } catch (\Throwable $t) {
-                $success = false;
                 $message = $t->getMessage();
             }
         }
-        Template::render('home', compact('uploaded', 'success', 'message'));
+        $title = 'Upload your picture';
+        Template::render('home', compact('title', 'uploaded', 'message'));
+    }
+
+    public function view($basename)
+    {
+        Template::render('view', [
+            'title' => 'View & download your picture',
+            'imgUrl' => Config::get('folderBaseUrl').'/'.$basename,
+            'downloadUrl' => url('/download/'.$basename)
+        ]);
+    }
+
+    public function download($basename)
+    {
+        $path = Config::get('folderPath').'/'.pathinfo($basename, PATHINFO_BASENAME);
+        if (!file_exists($path)) {
+            header("HTTP/1.0 404 Not Found");
+            die;
+        }
+        $mime = ($mime = getimagesize($path)) ? $mime['mime'] : $mime;
+        $size = filesize($path);
+        $fp = fopen($path, "rb");
+        header("Content-type: ".$mime);
+        header("Content-Length: ".$size);
+        header("Content-Disposition: attachment; filename=".$basename);
+        header('Content-Transfer-Encoding: binary');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        fpassthru($fp);
+        die;
     }
 }

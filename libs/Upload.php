@@ -84,7 +84,7 @@ class Upload
         $upload = new \upload($_FILES[$this->key]);
         $upload->file_max_size = Config::get('maxUploadSize');
         $upload->file_new_name_body = $this->filename;
-        $upload->allowed = array('image/*');
+        $upload->allowed = ['image/*'];
         $upload->image_resize = false;
         if ($this->convert) {
             $upload->image_convert = 'jpg';

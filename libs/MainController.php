@@ -40,7 +40,7 @@ class MainController
                 $watermark->handle();
                 $pic = new Upload('pic');
                 $pic->handle();
-                $positions = array(
+                $positions = [
                     'top-left',
                     'top',
                     'top-right',
@@ -50,7 +50,7 @@ class MainController
                     'bottom-left',
                     'bottom',
                     'bottom-right'
-                );
+                ];
                 $position = isset($_POST['position']) && in_array($_POST['position'], $positions) ? $_POST['position'] : 'top-left';
                 $image = new Watermark($pic->path, $watermark->path, $position);
                 $image->handle();

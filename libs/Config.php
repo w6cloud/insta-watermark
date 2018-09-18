@@ -44,12 +44,12 @@ class Config
      */
     private function __construct()
     {
-        $defaults = array(
+        $defaults = [
             'debug' => false,
             'baseUrl' => '',
             'folderPath' => ROOT.'/uploads',
             'folderBaseUrl' => '/uploads'
-        );
+        ];
         include ROOT.'/config.php';
         $this->config = array_merge($defaults, $config);
     }

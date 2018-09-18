@@ -66,7 +66,7 @@ class Watermark
             $offsetLeft = 0;
         }
 
-        Image::configure(array('driver' => 'gd'));
+        Image::configure(['driver' => 'gd']);
         $image = Image::make($this->pic)
             ->crop($newSize, $newSize, $offsetLeft, $offsetTop)
             ->resize(1080, 1080)

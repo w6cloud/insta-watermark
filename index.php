@@ -49,6 +49,6 @@ spl_autoload_register('\W6\InstaWatermark\autoload');
 require_once 'vendor/autoload.php';
 
 /**
- * Init plugin
+ * Init app
  */
 \W6\InstaWatermark\App::init();
